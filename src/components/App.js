@@ -1,25 +1,18 @@
 import React from "react";
+import { BrowserRouter, Route } from "react-router-dom";
+
 import MapContainer from "./MapContainer";
-import { connect } from "react-redux";
-import { fetchMoviesFromClick } from "../actions";
+import MovieList from "./MovieList";
 
 const App = (props) => {
-  const handleCountryClick = (t, map, coord) => {
-    props.fetchMoviesFromClick(t, map, coord);
-  };
-
   return (
     <div>
-      <MapContainer onCountryClick={handleCountryClick} />
+      <BrowserRouter>
+        <MapContainer />
+        <Route to="/movies" component={MovieList} />
+      </BrowserRouter>
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    clickedCoordinates: state.clickedCoordinates,
-    movies: state.movies.filter((movie) => movie.Error != "Movie not found!"),
-  };
-};
-
-export default connect(mapStateToProps, { fetchMoviesFromClick })(App);
+export default App;

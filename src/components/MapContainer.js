@@ -1,10 +1,14 @@
 import React from "react";
 import { Map, GoogleApiWrapper } from "google-maps-react";
+import { connect } from "react-redux";
+
+import { fetchMoviesFromClick } from "../actions";
+import mapStyles from "../utils/mapStyles";
 
 class MapContainer extends React.Component {
   _mapLoaded(mapProps, map) {
     map.setOptions({
-      styles: mapStyle,
+      styles: mapStyles,
     });
   }
 
@@ -15,7 +19,9 @@ class MapContainer extends React.Component {
           google={this.props.google}
           style={this.props.mapStyles}
           zoom={2.4}
-          onClick={this.props.onCountryClick}
+          onClick={(t, map, coord) =>
+            this.props.fetchMoviesFromClick(t, map, coord)
+          }
           initialCenter={{
             lat: 15,
             lng: 0,
@@ -39,81 +45,14 @@ class MapContainer extends React.Component {
   }
 }
 
-export default GoogleApiWrapper({
-  apiKey: process.env.REACT_APP_MAPS_API,
-})(MapContainer);
+const mapStateToProps = (state) => {
+  return {
+    clickedCoordinates: state.clickedCoordinates,
+  };
+};
 
-const mapStyle = [
-  {
-    featureType: "all",
-    elementType: "all",
-    stylers: [
-      {
-        visibility: "off",
-      },
-    ],
-  },
-  {
-    featureType: "all",
-    elementType: "labels.text.fill",
-    stylers: [
-      {
-        saturation: 100,
-      },
-      {
-        color: "#000000",
-      },
-      {
-        lightness: 100,
-      },
-      {
-        visibility: "on",
-      },
-      {
-        "font-family": "Work Sans",
-      },
-    ],
-  },
-  {
-    featureType: "administrative.country",
-    elementType: "geometry.stroke",
-    stylers: [
-      {
-        visibility: "on",
-      },
-      {
-        color: "#FFFFFF",
-      },
-      {
-        lightness: 100,
-      },
-      {
-        weight: 0.35,
-      },
-    ],
-  },
-  {
-    featureType: "landscape.natural",
-    elementType: "geometry.fill",
-    stylers: [
-      {
-        visibility: "on",
-      },
-      {
-        color: "#4d6059",
-      },
-    ],
-  },
-  {
-    featureType: "water",
-    elementType: "all",
-    stylers: [
-      {
-        color: "#38444C",
-      },
-      {
-        visibility: "on",
-      },
-    ],
-  },
-];
+export default connect(mapStateToProps, { fetchMoviesFromClick })(
+  GoogleApiWrapper({
+    apiKey: process.env.REACT_APP_MAPS_API,
+  })(MapContainer)
+);
