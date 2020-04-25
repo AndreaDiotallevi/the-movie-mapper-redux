@@ -1,11 +1,11 @@
 import React from "react";
 import MapContainer from "./MapContainer";
 import { connect } from "react-redux";
-import { clickCoordinatesAndFetchCountry } from "../actions";
+import { fetchMoviesFromClick } from "../actions";
 
 const App = (props) => {
   const handleCountryClick = (t, map, coord) => {
-    props.clickCoordinatesAndFetchCountry(t, map, coord);
+    props.fetchMoviesFromClick(t, map, coord);
   };
 
   return (
@@ -16,9 +16,10 @@ const App = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { clickedCoordinates: state.clickedCoordinates };
+  return {
+    clickedCoordinates: state.clickedCoordinates,
+    movies: state.movies.filter((movie) => movie.Error != "Movie not found!"),
+  };
 };
 
-export default connect(mapStateToProps, { clickCoordinatesAndFetchCountry })(
-  App
-);
+export default connect(mapStateToProps, { fetchMoviesFromClick })(App);
