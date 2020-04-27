@@ -10,7 +10,12 @@ const Header = (props) => {
     if (props.location.pathname === "/") {
       return "THE MOVIE MAPPER";
     } else {
-      return `WELCOME TO ${props.country.toUpperCase()}`;
+      const country = props.location.pathname
+        .split("%20")
+        .join(" ")
+        .toUpperCase()
+        .slice(1);
+      return `WELCOME TO ${country}`;
     }
   };
 
@@ -41,9 +46,4 @@ const Header = (props) => {
     </div>
   );
 };
-
-const mapStateToProps = (state) => {
-  return { country: state.fetchedCountry };
-};
-
-export default connect(mapStateToProps, { clearMovies })(Header);
+export default connect(null, { clearMovies })(Header);
