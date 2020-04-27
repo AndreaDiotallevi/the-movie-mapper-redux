@@ -7,18 +7,20 @@ import leftArrow from "../assets/left-arrow.png";
 const Header = (props) => {
   return (
     <div className="header-component">
-      <Link to="/">
-        <p>
-          <img
-            className="back-home-link"
-            src={leftArrow}
-            alt="back-home-link"
-          ></img>
-        </p>
-      </Link>
-      <h1 className="header-title" data-test="movie-country-message">
-        WELCOME TO {props.country.toUpperCase()}
-      </h1>
+      <div className="header-container">
+        <Link to="/">
+          <p>
+            <img
+              className="back-home-link"
+              src={leftArrow}
+              alt="back-home-link"
+            ></img>
+          </p>
+        </Link>
+        <h1 className="header-title" data-test="movie-country-message">
+          WELCOME TO {props.country.toUpperCase()}
+        </h1>
+      </div>
     </div>
   );
 };
