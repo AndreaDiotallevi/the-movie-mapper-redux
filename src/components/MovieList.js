@@ -9,7 +9,6 @@ class MovieList extends React.Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <div className="movie-list-component">
         <div className="movie-list-container">
