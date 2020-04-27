@@ -17,7 +17,6 @@ class MovieList extends React.Component {
 
   filterMovies = () => {
     const values = queryString.parse(this.props.location.search);
-    console.log(values["genre"]);
 
     if (!values["genre"] || values["genre"] === "All") {
       return this.props.movies;
@@ -26,14 +25,6 @@ class MovieList extends React.Component {
         movie.Genre.split(", ").includes(values["genre"])
       );
     }
-    // return this.props.movies;
-    // if (selectedGenre === "All" || selectedGenre === null) {
-    //   return this.props.movies;
-    // } else {
-    //   return this.props.movies.filter((movie) =>
-    //     movie.genreList.includes(this.state.selectedGenre)
-    //   );
-    // }
   };
 
   handleImageUrlError = (event) => {

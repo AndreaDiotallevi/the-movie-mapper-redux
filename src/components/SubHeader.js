@@ -3,7 +3,6 @@ import history from "../history";
 import genreList from "../utils/genreList";
 
 const SubHeader = (props) => {
-  console.log(props);
   const handleGenreChoice = (genre) => {
     history.push({
       pathname: `${props.location.pathname}`,
