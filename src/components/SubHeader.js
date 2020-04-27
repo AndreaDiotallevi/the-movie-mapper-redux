@@ -1,16 +1,16 @@
 import React from "react";
-
-const genreList = [
-  "Action",
-  "Comedy",
-  "Crime",
-  "Drama",
-  "Romance",
-  "Sci-Fi",
-  "Thriller",
-];
+import history from "../history";
+import genreList from "../utils/genreList";
 
 const SubHeader = (props) => {
+  console.log(props);
+  const handleGenreChoice = (genre) => {
+    history.push({
+      pathname: `${props.location.pathname}`,
+      search: `?genre=${genre}`,
+    });
+  };
+
   const renderGenreButtons = () => {
     if (props.location.pathname !== "/") {
       return (
@@ -19,20 +19,12 @@ const SubHeader = (props) => {
             <button
               className="genre-button"
               value={genre}
-              onClick={handleGenreChoice}
-              data-test={`genre-button-${genre.toLocaleLowerCase()}`}
+              onClick={() => handleGenreChoice(genre)}
               key={index}
             >
               {genre}
             </button>
           ))}
-          <button
-            value={"All"}
-            className="genre-button"
-            onClick={handleGenreChoice}
-          >
-            All
-          </button>
         </div>
       );
     } else {
@@ -43,8 +35,6 @@ const SubHeader = (props) => {
       );
     }
   };
-
-  const handleGenreChoice = () => {};
 
   return <div className="sub-header-component">{renderGenreButtons()}</div>;
 };

@@ -1,16 +1,40 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchMoviesFromCountry } from "../actions";
+import queryString from "query-string";
 
 import noPhotoAvailable from "../assets/no-photo-available.jpg";
 
 class MovieList extends React.Component {
+  values = queryString.parse(this.props.location.search);
+
   componentDidMount() {
     const country = this.props.match.params.country
       .split("%20")
       .map((word) => word[0].toUpperCase() + word.slice(1));
     this.props.fetchMoviesFromCountry(country);
   }
+
+  filterMovies = () => {
+    const values = queryString.parse(this.props.location.search);
+    console.log(values["genre"]);
+
+    if (!values["genre"] || values["genre"] === "All") {
+      return this.props.movies;
+    } else {
+      return this.props.movies.filter((movie) =>
+        movie.Genre.split(", ").includes(values["genre"])
+      );
+    }
+    // return this.props.movies;
+    // if (selectedGenre === "All" || selectedGenre === null) {
+    //   return this.props.movies;
+    // } else {
+    //   return this.props.movies.filter((movie) =>
+    //     movie.genreList.includes(this.state.selectedGenre)
+    //   );
+    // }
+  };
 
   handleImageUrlError = (event) => {
     event.target.src = noPhotoAvailable;
@@ -21,7 +45,7 @@ class MovieList extends React.Component {
       <div className="movie-list-component">
         <div className="movie-list-container">
           <ul>
-            {this.props.movies.map((movie, index) => (
+            {this.filterMovies().map((movie, index) => (
               <li
                 className="movie"
                 data-test={`movie-${movie.imdbID}`}
