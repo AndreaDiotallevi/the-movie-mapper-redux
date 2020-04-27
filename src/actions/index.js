@@ -4,6 +4,8 @@ import omdb from "../apis/omdb";
 import countryCodesJson from "../utils/countryCodes.json";
 import movieTitlesJson from "../utils/movieTitles.json";
 
+import history from "../history";
+
 const LOCATIONIQ_API_KEY = process.env.REACT_APP_LOCATION_API;
 const OMDB_API_KEY = process.env.REACT_APP_OMDB_API;
 
@@ -19,6 +21,7 @@ export const fetchMoviesFromClick = (t, map, coord) => async (
   const country = getState().fetchedCountry;
   const movieTitles = movieTitlesJson[country];
   movieTitles.forEach((title) => dispatch(fetchMovie(title)));
+  history.push(`${country}`);
 };
 
 export const clickCoordinates = (t, map, coord) => {

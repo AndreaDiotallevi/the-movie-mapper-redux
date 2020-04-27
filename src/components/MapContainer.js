@@ -17,7 +17,6 @@ class MapContainer extends React.Component {
       <div>
         <Map
           google={this.props.google}
-          style={this.props.mapStyles}
           zoom={2.4}
           onClick={(t, map, coord) =>
             this.props.fetchMoviesFromClick(t, map, coord)

@@ -1,16 +1,17 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { Router, Route } from "react-router-dom";
 
 import MapContainer from "./MapContainer";
 import MovieList from "./MovieList";
+import history from "../history";
 
 const App = (props) => {
   return (
     <div>
-      <BrowserRouter>
-        <MapContainer />
-        <Route to="/movies" component={MovieList} />
-      </BrowserRouter>
+      <Router history={history}>
+        <Route path="/" exact component={MapContainer} />
+        <Route path="/:country" component={MovieList} />
+      </Router>
     </div>
   );
 };
