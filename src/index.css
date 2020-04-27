@@ -36,6 +36,35 @@ button:focus {
   width: 1030px;
 }
 
+/* SubHeader */
+
+.sub-header-component {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: black;
+}
+
+.genre-buttons,
+.sub-header-description {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  width: 1030px;
+}
+
+.sub-header-description {
+  justify-content: center;
+}
+
+.sub-header-description p {
+  color: white;
+  padding-bottom: 5px;
+  text-align: center;
+}
+
 /* Home */
 
 .home-component-header {
@@ -75,14 +104,6 @@ button:focus {
   align-items: center;
   background-color: black;
   width: 100%;
-}
-
-.genre-buttons {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: black;
-  width: 1030px;
 }
 
 .header-title {
@@ -205,7 +226,8 @@ ul {
   .movie-list-container,
   .header-container,
   .genre-buttons,
-  .home-header-description {
+  .home-header-description,
+  .sub-header-description {
     width: 670px;
   }
 }
@@ -213,7 +235,8 @@ ul {
 @media (max-width: 770px) {
   .movie-list-container,
   .header-container,
-  .home-header-description {
+  .home-header-description,
+  .sub-header-description {
     width: 310px;
   }
 
@@ -242,7 +265,8 @@ ul {
   .header-container,
   .genre-buttons,
   .movie,
-  .home-header-description {
+  .home-header-description,
+  .sub-header-description {
     width: auto;
     margin-right: 10px;
     margin-left: 10px;
