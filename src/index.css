@@ -58,7 +58,6 @@ button:focus {
   font-weight: 500;
   margin-left: auto;
   margin-right: auto;
-  letter-spacing: 5px;
 }
 
 /* Movies */
@@ -90,7 +89,6 @@ button:focus {
   color: white;
   font-size: 18px;
   font-weight: 500;
-  letter-spacing: 5px;
   margin-left: auto;
   margin-right: auto;
 }

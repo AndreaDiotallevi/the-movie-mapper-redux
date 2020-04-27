@@ -6,9 +6,17 @@ import { clearMovies } from "../actions";
 import leftArrow from "../assets/left-arrow.png";
 
 const Header = (props) => {
-  return (
-    <div className="header-component">
-      <div className="header-container">
+  const renderPageTitle = () => {
+    if (props.location.pathname === "/") {
+      return "THE MOVIE MAPPER";
+    } else {
+      return `WELCOME TO ${props.country.toUpperCase()}`;
+    }
+  };
+
+  const renderBackArrow = () => {
+    if (props.location.pathname !== "/") {
+      return (
         <Link to="/" onClick={props.clearMovies}>
           <p>
             <img
@@ -18,8 +26,16 @@ const Header = (props) => {
             ></img>
           </p>
         </Link>
+      );
+    }
+  };
+
+  return (
+    <div className="header-component">
+      <div className="header-container">
+        {renderBackArrow()}
         <h1 className="header-title" data-test="movie-country-message">
-          WELCOME TO {props.country.toUpperCase()}
+          {renderPageTitle()}
         </h1>
       </div>
     </div>
