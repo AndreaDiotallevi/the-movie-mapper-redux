@@ -1,6 +1,5 @@
 import locationiq from "../apis/locationiq";
 import omdb from "../apis/omdb";
-
 import countryCodesJson from "../utils/countryCodes.json";
 import movieTitlesJson from "../utils/movieTitles.json";
 
@@ -56,4 +55,10 @@ export const fetchMovie = (title) => async (dispatch) => {
   const response = await omdb.get(`/?apikey=${OMDB_API_KEY}&t=${titleUrl}`);
 
   dispatch({ type: "MOVIE_FETCHED", payload: response.data });
+};
+
+export const clearMovies = () => {
+  return {
+    type: "MOVIES_CLEARED",
+  };
 };
