@@ -6,21 +6,19 @@ import { clearMovies } from "../actions";
 import leftArrow from "../assets/left-arrow.png";
 
 const Header = (props) => {
+  const pathname = props.location.pathname;
+
   const renderPageTitle = () => {
-    if (props.location.pathname === "/") {
+    if (pathname === "/") {
       return "THE MOVIE MAPPER";
     } else {
-      const country = props.location.pathname
-        .split("%20")
-        .join(" ")
-        .toUpperCase()
-        .slice(1);
+      const country = pathname.split("%20").join(" ").toUpperCase().slice(1);
       return `WELCOME TO ${country}`;
     }
   };
 
   const renderBackArrow = () => {
-    if (props.location.pathname !== "/") {
+    if (pathname !== "/") {
       return (
         <Link to="/" onClick={props.clearMovies}>
           <p>
