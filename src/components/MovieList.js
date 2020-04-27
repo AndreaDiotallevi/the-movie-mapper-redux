@@ -1,9 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
+import { fetchMoviesFromCountry } from "../actions";
 
 import noPhotoAvailable from "../assets/no-photo-available.jpg";
 
 class MovieList extends React.Component {
+  componentDidMount() {
+    const country = this.props.match.params.country
+      .split("%20")
+      .map((word) => word[0].toUpperCase() + word.slice(1));
+    this.props.fetchMoviesFromCountry(country);
+  }
+
   handleImageUrlError = (event) => {
     event.target.src = noPhotoAvailable;
   };
@@ -83,4 +91,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(MovieList);
+export default connect(mapStateToProps, { fetchMoviesFromCountry })(MovieList);

@@ -8,18 +8,16 @@ import history from "../history";
 const LOCATIONIQ_API_KEY = process.env.REACT_APP_LOCATION_API;
 const OMDB_API_KEY = process.env.REACT_APP_OMDB_API;
 
-export const fetchMoviesFromClick = (t, map, coord) => async (
+export const fetchCountryFromClick = (t, map, coord) => async (
   dispatch,
   getState
 ) => {
   await dispatch(clickCoordinates(t, map, coord));
 
   const coordinates = getState().clickedCoordinates;
-  await dispatch(fetchCountry(coordinates));
+  await dispatch(fetchCountryFromCoordinates(coordinates));
 
   const country = getState().fetchedCountry;
-  const movieTitles = movieTitlesJson[country];
-  movieTitles.forEach((title) => dispatch(fetchMovie(title)));
   history.push(`${country}`);
 };
 
@@ -36,7 +34,9 @@ export const clickCoordinates = (t, map, coord) => {
   };
 };
 
-export const fetchCountry = (clickedCoordinates) => async (dispatch) => {
+export const fetchCountryFromCoordinates = (clickedCoordinates) => async (
+  dispatch
+) => {
   const [lat, lng] = clickedCoordinates;
   const response = await locationiq.get(
     `/reverse.php?key=${LOCATIONIQ_API_KEY}&lat=${lat}&lon=${lng}&format=json`
@@ -48,6 +48,12 @@ export const fetchCountry = (clickedCoordinates) => async (dispatch) => {
   console.log("Country: ", country);
 
   dispatch({ type: "COUNTRY_FETCHED", payload: country });
+};
+
+export const fetchMoviesFromCountry = (country) => async (dispatch) => {
+  const movieTitles = movieTitlesJson[country];
+  movieTitles.forEach((title) => dispatch(fetchMovie(title)));
+  history.push(`${country}`);
 };
 
 export const fetchMovie = (title) => async (dispatch) => {

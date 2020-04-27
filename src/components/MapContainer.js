@@ -2,7 +2,7 @@ import React from "react";
 import { Map, GoogleApiWrapper } from "google-maps-react";
 import { connect } from "react-redux";
 
-import { fetchMoviesFromClick } from "../actions";
+import { fetchCountryFromClick } from "../actions";
 import mapStyles from "../utils/mapStyles";
 
 class MapContainer extends React.Component {
@@ -19,7 +19,7 @@ class MapContainer extends React.Component {
           google={this.props.google}
           zoom={2.4}
           onClick={(t, map, coord) =>
-            this.props.fetchMoviesFromClick(t, map, coord)
+            this.props.fetchCountryFromClick(t, map, coord)
           }
           initialCenter={{
             lat: 15,
@@ -50,7 +50,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchMoviesFromClick })(
+export default connect(mapStateToProps, { fetchCountryFromClick })(
   GoogleApiWrapper({
     apiKey: process.env.REACT_APP_MAPS_API,
   })(MapContainer)
