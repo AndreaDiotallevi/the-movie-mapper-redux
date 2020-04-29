@@ -28,26 +28,20 @@ class MovieList extends React.Component {
   };
 
   renderList() {
-    if (this.props.movies.length > 0) {
-      return (
-        <ul>
-          {this.filterMovies().map((movie) => (
-            <MovieDetail
-              key={movie.imdbID}
-              imdbID={movie.imdbID}
-              title={movie.Title}
-              plot={movie.Plot}
-              posterURL={movie.Poster}
-              releaseDate={movie.Released}
-            />
-          ))}
-        </ul>
-      );
-    } else {
-      return (
-        <p className="no-movies-message">{`Bad Luck! No movies available for ${this.getCountryFromUrl()}`}</p>
-      );
-    }
+    return (
+      <ul>
+        {this.filterMovies().map((movie) => (
+          <MovieDetail
+            key={movie.imdbID}
+            imdbID={movie.imdbID}
+            title={movie.Title}
+            plot={movie.Plot}
+            posterURL={movie.Poster}
+            releaseDate={movie.Released}
+          />
+        ))}
+      </ul>
+    );
   }
 
   render() {
