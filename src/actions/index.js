@@ -28,8 +28,6 @@ export const clickCoordinates = (t, map, coord) => {
   const lat = latLng.lat();
   const lng = latLng.lng();
 
-  console.log("Clicked coordinates: ", [lat, lng]);
-
   return {
     type: COORDINATES_CLICKED,
     payload: [lat, lng],
@@ -48,9 +46,7 @@ export const fetchCountryFromCoordinates = (clickedCoordinates) => async (
     const countryCode = response.data.address.country_code;
     const country = countryCodesJson[countryCode];
 
-    console.log("Country: ", country);
-
-    dispatch({ type: COUNTRY_FETCHED, payload: country });
+    dispatch({ type: COUNTRY_FETCHED });
     history.push(`${country}`);
   } catch (err) {
     dispatch({ type: COUNTRY_NOT_FETCHED });
