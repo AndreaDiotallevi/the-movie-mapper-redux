@@ -38,16 +38,20 @@ export const fetchCountryFromCoordinates = (clickedCoordinates) => async (
   dispatch
 ) => {
   const [lat, lng] = clickedCoordinates;
-  const response = await locationiq.get(
-    `/reverse.php?key=${LOCATIONIQ_API_KEY}&lat=${lat}&lon=${lng}&format=json`
-  );
+  try {
+    const response = await locationiq.get(
+      `/reverse.php?key=${LOCATIONIQ_API_KEY}&lat=${lat}&lon=${lng}&format=json`
+    );
 
-  const countryCode = response.data.address.country_code;
-  const country = countryCodesJson[countryCode];
+    const countryCode = response.data.address.country_code;
+    const country = countryCodesJson[countryCode];
 
-  console.log("Country: ", country);
+    console.log("Country: ", country);
 
-  dispatch({ type: "COUNTRY_FETCHED", payload: country });
+    dispatch({ type: "COUNTRY_FETCHED", payload: country });
+  } catch (err) {
+    dispatch({ type: "NO_COUNTRY_FETCHED" });
+  }
 };
 
 export const fetchMoviesFromCountry = (country) => async (dispatch) => {
@@ -61,6 +65,12 @@ export const fetchMovie = (title) => async (dispatch) => {
   const response = await omdb.get(`/?apikey=${OMDB_API_KEY}&t=${titleUrl}`);
 
   dispatch({ type: "MOVIE_FETCHED", payload: response.data });
+};
+
+export const clearCountry = () => {
+  return {
+    type: "COUNTRY_CLEARED",
+  };
 };
 
 export const clearMovies = () => {

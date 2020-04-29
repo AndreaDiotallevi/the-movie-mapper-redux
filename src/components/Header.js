@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { clearMovies } from "../actions";
+import { clearMovies, clearCountry } from "../actions";
 
 import leftArrow from "../assets/left-arrow.png";
 
@@ -17,10 +17,15 @@ const Header = (props) => {
     }
   };
 
+  const handleBackButtonClick = () => {
+    props.clearMovies();
+    props.clearCountry();
+  };
+
   const renderBackArrow = () => {
     if (pathname !== "/") {
       return (
-        <Link to="/" onClick={props.clearMovies}>
+        <Link to="/" onClick={handleBackButtonClick}>
           <p>
             <img
               className="back-home-link"
@@ -44,4 +49,4 @@ const Header = (props) => {
     </div>
   );
 };
-export default connect(null, { clearMovies })(Header);
+export default connect(null, { clearMovies, clearCountry })(Header);
