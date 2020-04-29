@@ -12,17 +12,15 @@ class MapContainer extends React.Component {
     });
   }
 
-  handleMapClick(t, map, coord) {
-    this.props.fetchCountryFromClick(t, map, coord);
-  }
-
   render() {
     return (
       <div>
         <Map
           google={this.props.google}
           zoom={2.4}
-          onClick={(t, map, coord) => this.handleMapClick(t, map, coord)}
+          onClick={(t, map, coord) =>
+            this.props.fetchCountryFromClick(t, map, coord)
+          }
           initialCenter={{
             lat: 15,
             lng: 0,
@@ -37,7 +35,7 @@ class MapContainer extends React.Component {
             visible={this.props.infoWindowOn}
           >
             <div>
-              <p>No movies under the sea</p>
+              <p>No Movies Under The Sea</p>
             </div>
           </InfoWindow>
         </Map>
