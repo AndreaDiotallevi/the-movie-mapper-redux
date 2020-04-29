@@ -33,6 +33,7 @@ class MovieList extends React.Component {
           <ul>
             {this.filterMovies().map((movie) => (
               <MovieDetail
+                key={movie.imdbID}
                 imdbID={movie.imdbID}
                 title={movie.Title}
                 plot={movie.Plot}
