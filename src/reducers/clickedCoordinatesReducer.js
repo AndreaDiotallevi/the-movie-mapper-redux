@@ -1,4 +1,4 @@
-export default (state = [], action) => {
+export default (state = [15, 0], action) => {
   switch (action.type) {
     case "COORDINATES_CLICKED":
       return action.payload;

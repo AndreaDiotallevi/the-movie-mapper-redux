@@ -1,9 +1,9 @@
 export default (state = [], action) => {
   switch (action.type) {
+    case "COUNTRY_FETCHED":
+      return [];
     case "MOVIE_FETCHED":
       return [...state, action.payload];
-    case "MOVIES_CLEARED":
-      return [];
     default:
       return state;
   }

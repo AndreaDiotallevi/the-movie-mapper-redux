@@ -2,7 +2,6 @@ import locationiq from "../apis/locationiq";
 import omdb from "../apis/omdb";
 import countryCodesJson from "../utils/countryCodes.json";
 import movieTitlesJson from "../utils/movieTitles.json";
-
 import history from "../history";
 
 const LOCATIONIQ_API_KEY = process.env.REACT_APP_LOCATION_API;
@@ -16,9 +15,6 @@ export const fetchCountryFromClick = (t, map, coord) => async (
 
   const coordinates = getState().clickedCoordinates;
   await dispatch(fetchCountryFromCoordinates(coordinates));
-
-  const country = getState().fetchedCountry;
-  history.push(`${country}`);
 };
 
 export const clickCoordinates = (t, map, coord) => {
@@ -49,6 +45,7 @@ export const fetchCountryFromCoordinates = (clickedCoordinates) => async (
     console.log("Country: ", country);
 
     dispatch({ type: "COUNTRY_FETCHED", payload: country });
+    history.push(`${country}`);
   } catch (err) {
     dispatch({ type: "NO_COUNTRY_FETCHED" });
   }
@@ -65,16 +62,4 @@ export const fetchMovie = (title) => async (dispatch) => {
   const response = await omdb.get(`/?apikey=${OMDB_API_KEY}&t=${titleUrl}`);
 
   dispatch({ type: "MOVIE_FETCHED", payload: response.data });
-};
-
-export const clearCountry = () => {
-  return {
-    type: "COUNTRY_CLEARED",
-  };
-};
-
-export const clearMovies = () => {
-  return {
-    type: "MOVIES_CLEARED",
-  };
 };

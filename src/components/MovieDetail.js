@@ -1,5 +1,4 @@
 import React from "react";
-
 import noPhotoAvailable from "../assets/no-photo-available.jpg";
 
 const MovieDetail = ({ imdbID, title, plot, posterURL, releaseDate }) => {
