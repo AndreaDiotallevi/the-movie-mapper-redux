@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import leftArrow from "../assets/left-arrow.png";
 
 const Header = (props) => {
-  const renderPageTitle = () => {
-    const { pathname } = props.location;
+  const { pathname } = props.location;
 
+  const renderPageTitle = () => {
     if (pathname === "/") {
       return "THE MOVIE MAPPER";
     } else {
@@ -15,8 +15,6 @@ const Header = (props) => {
   };
 
   const renderBackArrow = () => {
-    const { pathname } = props.location;
-
     if (pathname !== "/") {
       return (
         <Link to="/">

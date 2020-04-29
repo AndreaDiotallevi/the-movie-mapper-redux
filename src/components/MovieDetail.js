@@ -33,7 +33,7 @@ const MovieDetail = ({ imdbID, title, plot, posterURL, releaseDate }) => {
               rel="noopener noreferrer"
             >
               <h2 className="movie-title" data-test={`movie-title-${imdbID}`}>
-                {title.toUpperCase()}
+                {title}
               </h2>
             </a>
           </div>

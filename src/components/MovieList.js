@@ -5,13 +5,14 @@ import { fetchMoviesFromCountry } from "../actions";
 import queryString from "query-string";
 
 class MovieList extends React.Component {
-  values = queryString.parse(this.props.location.search);
-
   componentDidMount() {
-    const country = this.props.match.params.country
+    this.props.fetchMoviesFromCountry(this.getCountryFromUrl());
+  }
+
+  getCountryFromUrl() {
+    return this.props.match.params.country
       .split("%20")
       .map((word) => word[0].toUpperCase() + word.slice(1));
-    this.props.fetchMoviesFromCountry(country);
   }
 
   filterMovies = () => {
@@ -26,23 +27,33 @@ class MovieList extends React.Component {
     }
   };
 
+  renderList() {
+    if (this.props.movies.length > 0) {
+      return (
+        <ul>
+          {this.filterMovies().map((movie) => (
+            <MovieDetail
+              key={movie.imdbID}
+              imdbID={movie.imdbID}
+              title={movie.Title}
+              plot={movie.Plot}
+              posterURL={movie.Poster}
+              releaseDate={movie.Released}
+            />
+          ))}
+        </ul>
+      );
+    } else {
+      return (
+        <p className="no-movies-message">{`Bad Luck! No movies available for ${this.getCountryFromUrl()}`}</p>
+      );
+    }
+  }
+
   render() {
     return (
       <div className="movie-list-component">
-        <div className="movie-list-container">
-          <ul>
-            {this.filterMovies().map((movie) => (
-              <MovieDetail
-                key={movie.imdbID}
-                imdbID={movie.imdbID}
-                title={movie.Title}
-                plot={movie.Plot}
-                posterURL={movie.Poster}
-                releaseDate={movie.Released}
-              />
-            ))}
-          </ul>
-        </div>
+        <div className="movie-list-container">{this.renderList()}</div>
       </div>
     );
   }

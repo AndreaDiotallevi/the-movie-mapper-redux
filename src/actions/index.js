@@ -54,7 +54,7 @@ export const fetchCountryFromCoordinates = (clickedCoordinates) => async (
 };
 
 export const fetchMoviesFromCountry = (country) => async (dispatch) => {
-  const movieTitles = movieTitlesJson[country];
+  const movieTitles = movieTitlesJson[country] || [];
   movieTitles.forEach((title) => dispatch(fetchMovie(title)));
   history.push(`${country}`);
 };
