@@ -16,13 +16,15 @@ class MovieList extends React.Component {
   }
 
   filterMoviesByGenre = () => {
-    const values = queryString.parse(this.props.location.search);
+    const selectedGenre = queryString.parse(this.props.location.search)[
+      "genre"
+    ];
 
-    if (!values["genre"] || values["genre"] === "All") {
+    if (!selectedGenre || selectedGenre === "All") {
       return this.props.movies;
     } else {
       return this.props.movies.filter((movie) =>
-        movie.Genre.split(", ").includes(values["genre"])
+        movie.Genre.split(", ").includes(selectedGenre)
       );
     }
   };
