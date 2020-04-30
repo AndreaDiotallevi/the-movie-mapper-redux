@@ -14,7 +14,6 @@ export const fetchCountryFromClick = (t, map, coord) => async (
   getState
 ) => {
   await dispatch(clickCoordinates(t, map, coord));
-
   const coordinates = getState().clickedCoordinates;
   await dispatch(fetchCountryFromCoordinates(coordinates));
 };
@@ -42,7 +41,6 @@ export const fetchCountryFromCoordinates = (clickedCoordinates) => async (
 
     const countryCode = response.data.address.country_code;
     const country = countryCodesJson[countryCode];
-
     dispatch({ type: COUNTRY_FETCHED });
     history.push(`${country}`);
   } catch (err) {
