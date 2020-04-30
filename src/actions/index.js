@@ -3,63 +3,84 @@ import countryCodesJson from "../utils/countryCodes.json";
 import movieTitlesJson from "../utils/movieTitles.json";
 import history from "../history";
 import {
-  COORDINATES_CLICKED,
+  COORDINATES_FETCHED,
+  COUNTRY_CODE_FETCHED,
+  COUNTRY_CODE_NOT_FETCHED,
   COUNTRY_FETCHED,
-  COUNTRY_NOT_FETCHED,
-  MOVIE_FETCHED,
+  MOVIE_TITLES_FETCHED,
+  MOVIE_DATA_FETCHED,
 } from "./types";
 
-export const fetchCountryFromClick = (t, map, coord) => async (
-  dispatch,
-  getState
-) => {
-  await dispatch(clickCoordinates(t, map, coord));
-  const coordinates = getState().clickedCoordinates;
-  await dispatch(fetchCountryFromCoordinates(coordinates));
-};
-
-export const clickCoordinates = (t, map, coord) => {
+export const fetchCoordinates = (t, map, coord) => {
   const { latLng } = coord;
   const lat = latLng.lat();
   const lng = latLng.lng();
-
   return {
-    type: COORDINATES_CLICKED,
+    type: COORDINATES_FETCHED,
     payload: [lat, lng],
   };
 };
 
-export const fetchCountryFromCoordinates = (clickedCoordinates) => async (
-  dispatch
-) => {
-  const [lat, lng] = clickedCoordinates;
+export const fetchCountryCode = (coordinates) => async (dispatch) => {
+  const [lat, lng] = coordinates;
   try {
     const LOCATIONIQ_API_KEY = process.env.REACT_APP_LOCATION_API;
     const response = await axios.get(
       `https://us1.locationiq.com/v1/reverse.php?key=${LOCATIONIQ_API_KEY}&lat=${lat}&lon=${lng}&format=json`
     );
-
-    const countryCode = response.data.address.country_code;
-    const country = countryCodesJson[countryCode];
-    dispatch({ type: COUNTRY_FETCHED });
-    history.push(`${country}`);
+    dispatch({
+      type: COUNTRY_CODE_FETCHED,
+      payload: response.data.address.country_code,
+    });
   } catch (err) {
-    dispatch({ type: COUNTRY_NOT_FETCHED });
+    dispatch({ type: COUNTRY_CODE_NOT_FETCHED });
   }
 };
 
-export const fetchMoviesFromCountry = (country) => async (dispatch) => {
-  const movieTitles = movieTitlesJson[country] || [];
-  movieTitles.forEach((title) => dispatch(fetchMovie(title)));
-  history.push(`${country}`);
+export const fetchCountry = (countryCode) => {
+  return {
+    type: COUNTRY_FETCHED,
+    payload: countryCodesJson[countryCode],
+  };
 };
 
-export const fetchMovie = (title) => async (dispatch) => {
+export const fetchMovieTitles = (country) => {
+  const movieTitles = movieTitlesJson[country] || [];
+  return {
+    type: MOVIE_TITLES_FETCHED,
+    payload: movieTitles,
+  };
+};
+
+export const fetchMovieData = (title) => async (dispatch) => {
   const titleUrl = title.toLowerCase().split(" ").join("-");
   const OMDB_API_KEY = process.env.REACT_APP_OMDB_API;
   const response = await axios.get(
     `https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&t=${titleUrl}`
   );
+  dispatch({ type: MOVIE_DATA_FETCHED, payload: response.data });
+};
 
-  dispatch({ type: MOVIE_FETCHED, payload: response.data });
+export const fetchCoordinatesCountryCodeAndCountry = (t, map, coord) => async (
+  dispatch,
+  getState
+) => {
+  await dispatch(fetchCoordinates(t, map, coord));
+  const coordinates = getState().coordinates;
+  await dispatch(fetchCountryCode(coordinates));
+  const countryCode = getState().countryCode;
+  if (countryCode !== "") {
+    dispatch(fetchCountry(countryCode));
+    const country = getState().country;
+    history.push(`${country}`);
+  }
+};
+
+export const fetchMovieTitlesAndMovieData = (country) => async (
+  dispatch,
+  getState
+) => {
+  await dispatch(fetchMovieTitles(country));
+  const movieTitles = getState().movieTitles;
+  movieTitles.forEach((title) => dispatch(fetchMovieData(title)));
 };

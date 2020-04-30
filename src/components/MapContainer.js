@@ -2,7 +2,7 @@ import React from "react";
 import { Map, GoogleApiWrapper, InfoWindow } from "google-maps-react";
 import { connect } from "react-redux";
 
-import { fetchCountryFromClick } from "../actions";
+import { fetchCoordinatesCountryCodeAndCountry } from "../actions";
 import mapStyles from "../utils/mapStyles";
 
 const MapContainer = (props) => {
@@ -17,7 +17,9 @@ const MapContainer = (props) => {
       <Map
         google={props.google}
         zoom={2.4}
-        onClick={(t, map, coord) => props.fetchCountryFromClick(t, map, coord)}
+        onClick={(t, map, coord) =>
+          props.fetchCoordinatesCountryCodeAndCountry(t, map, coord)
+        }
         initialCenter={{
           lat: 15,
           lng: 0,
@@ -26,8 +28,8 @@ const MapContainer = (props) => {
       >
         <InfoWindow
           position={{
-            lat: props.clickedCoordinates[0],
-            lng: props.clickedCoordinates[1],
+            lat: props.coordinates[0],
+            lng: props.coordinates[1],
           }}
           visible={props.infoWindowOn}
         >
@@ -42,12 +44,12 @@ const MapContainer = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    clickedCoordinates: state.clickedCoordinates,
+    coordinates: state.coordinates,
     infoWindowOn: state.infoWindowOn,
   };
 };
 
-const mapDispatchToProps = { fetchCountryFromClick };
+const mapDispatchToProps = { fetchCoordinatesCountryCodeAndCountry };
 
 const wrappedMap = GoogleApiWrapper({
   apiKey: process.env.REACT_APP_MAPS_API,

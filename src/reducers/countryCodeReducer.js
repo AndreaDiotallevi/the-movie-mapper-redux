@@ -1,14 +1,14 @@
 import {
+  COUNTRY_CODE_FETCHED,
   COUNTRY_CODE_NOT_FETCHED,
-  COORDINATES_FETCHED,
 } from "../actions/types";
 
-export default (state = false, action) => {
+export default (state = "", action) => {
   switch (action.type) {
-    case COORDINATES_FETCHED:
-      return false;
+    case COUNTRY_CODE_FETCHED:
+      return action.payload;
     case COUNTRY_CODE_NOT_FETCHED:
-      return true;
+      return "";
     default:
       return state;
   }

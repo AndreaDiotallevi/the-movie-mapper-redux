@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import MovieDetail from "./MovieDetail";
-import { fetchMoviesFromCountry } from "../actions";
+import { fetchMovieTitlesAndMovieData } from "../actions";
 import queryString from "query-string";
 
 class MovieList extends React.Component {
   componentDidMount() {
-    this.props.fetchMoviesFromCountry(this.getCountryFromUrl());
+    this.props.fetchMovieTitlesAndMovieData(this.getCountryFromUrl());
   }
 
   getCountryFromUrl() {
@@ -15,16 +15,14 @@ class MovieList extends React.Component {
       .map((word) => word[0].toUpperCase() + word.slice(1));
   }
 
-  filterMoviesByGenre = () => {
-    const selectedGenre = queryString.parse(this.props.location.search)[
-      "genre"
-    ];
+  filterMovies = () => {
+    const values = queryString.parse(this.props.location.search);
 
-    if (!selectedGenre || selectedGenre === "All") {
+    if (!values["genre"] || values["genre"] === "All") {
       return this.props.movies;
     } else {
       return this.props.movies.filter((movie) =>
-        movie.Genre.split(", ").includes(selectedGenre)
+        movie.Genre.split(", ").includes(values["genre"])
       );
     }
   };
@@ -32,7 +30,7 @@ class MovieList extends React.Component {
   renderList() {
     return (
       <ul>
-        {this.filterMoviesByGenre().map((movie) => (
+        {this.filterMovies().map((movie) => (
           <MovieDetail
             key={movie.imdbID}
             imdbID={movie.imdbID}
@@ -61,6 +59,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = { fetchMoviesFromCountry };
-
-export default connect(mapStateToProps, mapDispatchToProps)(MovieList);
+export default connect(mapStateToProps, { fetchMovieTitlesAndMovieData })(
+  MovieList
+);
