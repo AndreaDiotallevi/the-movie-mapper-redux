@@ -9,9 +9,6 @@ import {
   MOVIE_FETCHED,
 } from "./types";
 
-const LOCATIONIQ_API_KEY = process.env.REACT_APP_LOCATION_API;
-const OMDB_API_KEY = process.env.REACT_APP_OMDB_API;
-
 export const fetchCountryFromClick = (t, map, coord) => async (
   dispatch,
   getState
@@ -38,6 +35,7 @@ export const fetchCountryFromCoordinates = (clickedCoordinates) => async (
 ) => {
   const [lat, lng] = clickedCoordinates;
   try {
+    const LOCATIONIQ_API_KEY = process.env.REACT_APP_LOCATION_API;
     const response = await axios.get(
       `https://us1.locationiq.com/v1/reverse.php?key=${LOCATIONIQ_API_KEY}&lat=${lat}&lon=${lng}&format=json`
     );
@@ -60,6 +58,7 @@ export const fetchMoviesFromCountry = (country) => async (dispatch) => {
 
 export const fetchMovie = (title) => async (dispatch) => {
   const titleUrl = title.toLowerCase().split(" ").join("-");
+  const OMDB_API_KEY = process.env.REACT_APP_OMDB_API;
   const response = await axios.get(
     `https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&t=${titleUrl}`
   );
