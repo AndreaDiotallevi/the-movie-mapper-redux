@@ -15,7 +15,7 @@ class MovieList extends React.Component {
       .map((word) => word[0].toUpperCase() + word.slice(1));
   }
 
-  filterMovies = () => {
+  filterMoviesByGenre = () => {
     const values = queryString.parse(this.props.location.search);
 
     if (!values["genre"] || values["genre"] === "All") {
@@ -30,7 +30,7 @@ class MovieList extends React.Component {
   renderList() {
     return (
       <ul>
-        {this.filterMovies().map((movie) => (
+        {this.filterMoviesByGenre().map((movie) => (
           <MovieDetail
             key={movie.imdbID}
             imdbID={movie.imdbID}
