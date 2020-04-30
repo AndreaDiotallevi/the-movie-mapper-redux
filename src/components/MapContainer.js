@@ -51,10 +51,10 @@ const mapStateToProps = (state) => {
   };
 };
 
+const mapDispatchToProps = { fetchCountryFromClick };
+
 const wrappedMap = GoogleApiWrapper({
   apiKey: process.env.REACT_APP_MAPS_API,
 })(MapContainer);
 
-export default connect(mapStateToProps, {
-  fetchCountryFromClick,
-})(wrappedMap);
+export default connect(mapStateToProps, mapDispatchToProps)(wrappedMap);
