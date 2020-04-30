@@ -1,5 +1,4 @@
-import locationiq from "../apis/locationiq";
-import omdb from "../apis/omdb";
+import axios from "axios";
 import countryCodesJson from "../utils/countryCodes.json";
 import movieTitlesJson from "../utils/movieTitles.json";
 import history from "../history";
@@ -39,8 +38,8 @@ export const fetchCountryFromCoordinates = (clickedCoordinates) => async (
 ) => {
   const [lat, lng] = clickedCoordinates;
   try {
-    const response = await locationiq.get(
-      `/reverse.php?key=${LOCATIONIQ_API_KEY}&lat=${lat}&lon=${lng}&format=json`
+    const response = await axios.get(
+      `https://us1.locationiq.com/v1/reverse.php?key=${LOCATIONIQ_API_KEY}&lat=${lat}&lon=${lng}&format=json`
     );
 
     const countryCode = response.data.address.country_code;
@@ -61,7 +60,9 @@ export const fetchMoviesFromCountry = (country) => async (dispatch) => {
 
 export const fetchMovie = (title) => async (dispatch) => {
   const titleUrl = title.toLowerCase().split(" ").join("-");
-  const response = await omdb.get(`/?apikey=${OMDB_API_KEY}&t=${titleUrl}`);
+  const response = await axios.get(
+    `https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&t=${titleUrl}`
+  );
 
   dispatch({ type: MOVIE_FETCHED, payload: response.data });
 };
