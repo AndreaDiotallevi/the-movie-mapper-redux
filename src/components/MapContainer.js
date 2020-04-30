@@ -5,44 +5,40 @@ import { connect } from "react-redux";
 import { fetchCountryFromClick } from "../actions";
 import mapStyles from "../utils/mapStyles";
 
-class MapContainer extends React.Component {
-  _mapLoaded(mapProps, map) {
+const MapContainer = (props) => {
+  const _mapLoaded = (mapProps, map) => {
     map.setOptions({
       styles: mapStyles,
     });
-  }
+  };
 
-  render() {
-    return (
-      <div>
-        <Map
-          google={this.props.google}
-          zoom={2.4}
-          onClick={(t, map, coord) =>
-            this.props.fetchCountryFromClick(t, map, coord)
-          }
-          initialCenter={{
-            lat: 15,
-            lng: 0,
+  return (
+    <div>
+      <Map
+        google={props.google}
+        zoom={2.4}
+        onClick={(t, map, coord) => props.fetchCountryFromClick(t, map, coord)}
+        initialCenter={{
+          lat: 15,
+          lng: 0,
+        }}
+        onReady={(mapProps, map) => _mapLoaded(mapProps, map)}
+      >
+        <InfoWindow
+          position={{
+            lat: props.clickedCoordinates[0],
+            lng: props.clickedCoordinates[1],
           }}
-          onReady={(mapProps, map) => this._mapLoaded(mapProps, map)}
+          visible={props.infoWindowOn}
         >
-          <InfoWindow
-            position={{
-              lat: this.props.clickedCoordinates[0],
-              lng: this.props.clickedCoordinates[1],
-            }}
-            visible={this.props.infoWindowOn}
-          >
-            <div>
-              <p>No Movies Under The Sea</p>
-            </div>
-          </InfoWindow>
-        </Map>
-      </div>
-    );
-  }
-}
+          <div>
+            <p>No Movies Under The Sea</p>
+          </div>
+        </InfoWindow>
+      </Map>
+    </div>
+  );
+};
 
 const mapStateToProps = (state) => {
   return {
