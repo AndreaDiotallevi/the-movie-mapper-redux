@@ -59,4 +59,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchMoviesFromCountry })(MovieList);
+const mapDispatchToProps = { fetchMoviesFromCountry };
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieList);
