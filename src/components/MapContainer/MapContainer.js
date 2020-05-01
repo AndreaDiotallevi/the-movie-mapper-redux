@@ -2,8 +2,8 @@ import React from "react";
 import { Map, GoogleApiWrapper, InfoWindow } from "google-maps-react";
 import { connect } from "react-redux";
 
-import { fetchCoordinatesCountryCodeAndCountry } from "../actions";
-import mapStyles from "../utils/mapStyles";
+import { fetchCoordinatesCountryCodeAndCountry } from "../../actions";
+import mapStyles from "../../utils/mapStyles";
 
 const MapContainer = (props) => {
   const _mapLoaded = (mapProps, map) => {

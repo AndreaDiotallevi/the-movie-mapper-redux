@@ -1,6 +1,6 @@
 import React from "react";
-import history from "../history";
-import genreList from "../utils/genreList";
+import history from "../../history";
+import genreList from "../../utils/genreList";
 
 const SubHeader = (props) => {
   const handleGenreChoice = (genre) => {

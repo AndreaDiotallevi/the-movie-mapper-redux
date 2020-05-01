@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import leftArrow from "../assets/left-arrow.png";
+import leftArrow from "../../assets/left-arrow.png";
 
 const Header = (props) => {
   const { pathname } = props.location;

@@ -1,11 +1,11 @@
 import React from "react";
 import { Router, Route } from "react-router-dom";
 
-import Header from "./Header";
-import SubHeader from "./SubHeader";
-import MapContainer from "./MapContainer";
-import MovieList from "./MovieList";
-import history from "../history";
+import Header from "../Header/Header";
+import SubHeader from "../SubHeader/SubHeader";
+import MapContainer from "../MapContainer/MapContainer";
+import MovieList from "../MovieList/MovieList";
+import history from "../../history";
 
 const App = () => {
   return (

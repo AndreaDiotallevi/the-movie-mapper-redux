@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import MovieDetail from "./MovieDetail";
-import { fetchMovieTitlesAndMovieData } from "../actions";
+import MovieDetail from "../MovieDetail/MovieDetail";
+import { fetchMovieTitlesAndMovieData } from "../../actions";
 import queryString from "query-string";
 
 class MovieList extends React.Component {
