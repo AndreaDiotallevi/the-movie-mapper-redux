@@ -3,7 +3,8 @@ import reduxThunk from "redux-thunk";
 import reducers from "./reducers";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+export const middlewares = [reduxThunk];
 export default createStore(
   reducers,
-  composeEnhancers(applyMiddleware(reduxThunk))
+  composeEnhancers(applyMiddleware(...middlewares))
 );
