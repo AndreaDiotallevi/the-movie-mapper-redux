@@ -76,11 +76,11 @@ export const fetchCoordinatesCountryCodeAndCountry = (t, map, coord) => async (
   }
 };
 
-export const fetchMovieTitlesAndMovieData = (country) => async (
+export const fetchMovieTitlesAndMovieData = (country) => (
   dispatch,
   getState
 ) => {
-  await dispatch(fetchMovieTitles(country));
+  dispatch(fetchMovieTitles(country));
   const movieTitles = getState().movieTitles;
   movieTitles.forEach((title) => dispatch(fetchMovieData(title)));
 };

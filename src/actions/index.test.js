@@ -7,7 +7,11 @@ import {
   fetchCountry,
   fetchMovieTitles,
   fetchMovieData,
+  fetchMovieTitlesAndMovieData,
 } from "./";
+
+jest.mock("../utils/movieTitles.json");
+jest.mock("../utils/countryCodes.json");
 
 beforeEach(() => {
   moxios.install();
@@ -100,8 +104,38 @@ describe("fetchMovieData action creator", () => {
     });
 
     await store.dispatch(fetchMovieData("Life Is Beautiful"));
-    const newStore = store.getState();
-    expect(newStore.movies[0].Title).toEqual("Life Is Beautiful");
-    expect(newStore.movies[0].Released).toEqual("12 Feb 1999");
+    const newState = store.getState();
+    expect(newState.movies[0].Title).toEqual("Life Is Beautiful");
+    expect(newState.movies[0].Released).toEqual("12 Feb 1999");
   });
 });
+
+// describe("fetchMovieTitlesAndMovieData", () => {
+//   test("adds movie titles and data to state", async () => {
+//     const store = storeFactory();
+
+//     moxios.wait(() => {
+//       const requestAt0 = moxios.requests.at(0);
+//       requestAt0.respondWith({
+//         status: 200,
+//         response: {
+//           Title: "Life Is Beautiful",
+//           Released: "12 Feb 1999",
+//         },
+//       });
+//       const requestAt1 = moxios.requests.at(1);
+//       requestAt1.respondWith({
+//         status: 200,
+//         response: {
+//           Title: "Cinema Paradiso",
+//           Released: "23 Feb 1990",
+//         },
+//       });
+//     });
+
+//     await store.dispatch(fetchMovieTitlesAndMovieData("Italy"));
+//     const newState = store.getState();
+//     console.log(newState);
+//     expect(newState.movies[0].Title).toEqual("Life Is Beautiful");
+//   });
+// });
