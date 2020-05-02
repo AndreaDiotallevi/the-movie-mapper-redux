@@ -7,7 +7,7 @@ const MovieDetail = ({ imdbID, title, plot, posterURL, releaseDate }) => {
   };
 
   return (
-    <li className="movie" data-test={`movie-${imdbID}`} key={imdbID}>
+    <li className="movie" key={imdbID}>
       <div className="movie-image">
         <a
           href={`https://www.imdb.com/title/${imdbID}/`}
@@ -28,6 +28,7 @@ const MovieDetail = ({ imdbID, title, plot, posterURL, releaseDate }) => {
           <div className="movie-title-container">
             <a
               className="movie-title-anchor"
+              data-test={`movie-title-anchor-${imdbID}`}
               href={`https://www.imdb.com/title/${imdbID}/`}
               target="_blank"
               rel="noopener noreferrer"
