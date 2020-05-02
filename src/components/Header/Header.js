@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Header = (props) => {
-  const { pathname } = props.location;
+  const pathname = props.location.pathname;
   const isHome = pathname === "/";
 
   const renderPageTitle = () => {
@@ -13,10 +13,10 @@ const Header = (props) => {
     return "THE MOVIE MAPPER";
   };
 
-  const renderBackArrow = () => {
+  const renderBackLink = () => {
     if (!isHome)
       return (
-        <Link to="/">
+        <Link to="/" data-test="back-home-link">
           <i class="arrow-left"></i>
         </Link>
       );
@@ -25,8 +25,10 @@ const Header = (props) => {
   return (
     <div className="header-component">
       <div className="header-container">
-        {renderBackArrow()}
-        <h1 className="header-title">{renderPageTitle()}</h1>
+        {renderBackLink()}
+        <h1 className="header-title" data-test="header-title">
+          {renderPageTitle()}
+        </h1>
       </div>
     </div>
   );
