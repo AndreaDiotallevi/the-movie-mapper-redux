@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Header = (props) => {
-  const pathname = props.location.pathname;
+const Header = ({ history }) => {
+  const pathname = history.location.pathname;
   const isHome = pathname === "/";
 
   const renderPageTitle = () => {
@@ -18,7 +18,7 @@ const Header = (props) => {
       <div className="header-container">
         {!isHome && (
           <Link to="/" data-test="back-home-link">
-            <i class="arrow-left"></i>
+            <i className="arrow-left"></i>
           </Link>
         )}
         <h1 className="header-title" data-test="header-title">

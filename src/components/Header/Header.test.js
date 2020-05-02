@@ -8,7 +8,8 @@ describe("Header", () => {
 
   describe("when home", () => {
     beforeEach(() => {
-      wrapper = shallow(<Header location={{ pathname: "/" }} />);
+      const props = { history: { location: { pathname: "/" } } };
+      wrapper = shallow(<Header {...props} />);
     });
 
     test("renders THE MOVIE MAPPER", () => {
@@ -24,7 +25,8 @@ describe("Header", () => {
 
   describe("when not in home", () => {
     beforeEach(() => {
-      wrapper = shallow(<Header location={{ pathname: "/Italy" }} />);
+      const props = { history: { location: { pathname: "/Italy" } } };
+      wrapper = shallow(<Header {...props} />);
     });
 
     test("renders WELCOME TO ITALY", () => {
