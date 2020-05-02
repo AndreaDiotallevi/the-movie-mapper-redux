@@ -16,7 +16,7 @@ class MovieList extends React.Component {
   }
 
   filterMovies = () => {
-    const values = queryString.parse(this.props.location.search);
+    const values = queryString.parse(this.props.history.location.search);
 
     if (!values["genre"] || values["genre"] === "All") {
       return this.props.movies;
