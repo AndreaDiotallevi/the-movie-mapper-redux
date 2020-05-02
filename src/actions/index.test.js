@@ -1,7 +1,7 @@
 import moxios from "moxios";
 
 import { storeFactory } from "../../test/testUtils";
-import { fetchCoordinates, fetchCountryCode } from "./";
+import { fetchCoordinates, fetchCountryCode, fetchCountry } from "./";
 
 beforeEach(() => {
   moxios.install();
@@ -12,10 +12,10 @@ afterEach(() => {
 });
 
 describe("fetchCoordinates", () => {
-  test("sets coordinates to state from user click on map", () => {
+  test("adds coordinates to state from user click on map", () => {
     const store = storeFactory();
-    const latMock = jest.fn().mockImplementation(() => 44);
-    const lngMock = jest.fn().mockImplementation(() => 10);
+    const latMock = jest.fn().mockImplementation(() => 44); // Italy
+    const lngMock = jest.fn().mockImplementation(() => 10); // Italy
     store.dispatch(
       fetchCoordinates({}, {}, { latLng: { lat: latMock, lng: lngMock } })
     );
@@ -25,7 +25,7 @@ describe("fetchCoordinates", () => {
 });
 
 describe("fetchCountryCode action creator", () => {
-  test("sets country code to state if clicked on a country", async () => {
+  test("adds countryCode to state if clicked on a country", async () => {
     const coordinates = [44, 10]; // Italy
     const store = storeFactory();
 
@@ -42,7 +42,7 @@ describe("fetchCountryCode action creator", () => {
     expect(newState.countryCode).toBe("it");
   });
 
-  test("sets infoWindowOn to true if clicked on the sea", async () => {
+  test("sets infoWindowOn to true to state if clicked on the sea", async () => {
     const coordinates = [44, -21]; // Sea
     const store = storeFactory();
 
@@ -57,5 +57,14 @@ describe("fetchCountryCode action creator", () => {
     await store.dispatch(fetchCountryCode(coordinates));
     const newState = store.getState();
     expect(newState.infoWindowOn).toBe(true);
+  });
+});
+
+describe("fetchCountry action creator", () => {
+  test("adds the country to state", () => {
+    const store = storeFactory();
+    store.dispatch(fetchCountry("it"));
+    const newState = store.getState();
+    expect(newState.country).toEqual("Italy");
   });
 });
