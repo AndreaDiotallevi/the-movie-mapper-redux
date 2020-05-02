@@ -1,7 +1,12 @@
 import moxios from "moxios";
 
 import { storeFactory } from "../../test/testUtils";
-import { fetchCoordinates, fetchCountryCode, fetchCountry } from "./";
+import {
+  fetchCoordinates,
+  fetchCountryCode,
+  fetchCountry,
+  fetchMovieTitles,
+} from "./";
 
 beforeEach(() => {
   moxios.install();
@@ -66,5 +71,14 @@ describe("fetchCountry action creator", () => {
     store.dispatch(fetchCountry("it"));
     const newState = store.getState();
     expect(newState.country).toEqual("Italy");
+  });
+});
+
+describe("fetchMovieTitles action creator", () => {
+  test("adds the movie titles to state", () => {
+    const store = storeFactory();
+    store.dispatch(fetchMovieTitles("Italy"));
+    const newState = store.getState();
+    expect(newState.movieTitles.length).not.toEqual(0);
   });
 });
