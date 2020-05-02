@@ -13,19 +13,14 @@ const Header = (props) => {
     return "THE MOVIE MAPPER";
   };
 
-  const renderBackLink = () => {
-    if (!isHome)
-      return (
-        <Link to="/" data-test="back-home-link">
-          <i class="arrow-left"></i>
-        </Link>
-      );
-  };
-
   return (
     <div className="header-component">
       <div className="header-container">
-        {renderBackLink()}
+        {!isHome && (
+          <Link to="/" data-test="back-home-link">
+            <i class="arrow-left"></i>
+          </Link>
+        )}
         <h1 className="header-title" data-test="header-title">
           {renderPageTitle()}
         </h1>
