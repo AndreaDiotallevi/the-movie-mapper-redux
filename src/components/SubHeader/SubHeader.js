@@ -13,13 +13,13 @@ const SubHeader = (props) => {
   const renderGenreButtons = () => {
     if (props.location.pathname !== "/") {
       return (
-        <div className="genre-buttons">
-          {genreList.map((genre, index) => (
+        <div className="genre-buttons" data-test="genre-buttons">
+          {genreList.map((genre) => (
             <button
               className="genre-button"
               value={genre}
               onClick={() => handleGenreChoice(genre)}
-              key={index}
+              key={genre}
             >
               {genre}
             </button>
@@ -28,7 +28,10 @@ const SubHeader = (props) => {
       );
     } else {
       return (
-        <div className="sub-header-description">
+        <div
+          className="sub-header-description"
+          data-test="sub-header-description"
+        >
           <p>Click on a country and find the best movies from that country!</p>
         </div>
       );
