@@ -8,7 +8,8 @@ describe("SubHeader", () => {
 
   describe("when home", () => {
     beforeEach(() => {
-      wrapper = shallow(<SubHeader location={{ pathname: "/" }} />);
+      const props = { history: { location: { pathname: "/" } } };
+      wrapper = shallow(<SubHeader {...props} />);
     });
 
     test("renders the homepage description", () => {
@@ -24,7 +25,8 @@ describe("SubHeader", () => {
 
   describe("when not in home", () => {
     beforeEach(() => {
-      wrapper = shallow(<SubHeader location={{ pathname: "/Italy" }} />);
+      const props = { history: { location: { pathname: "/Italy" } } };
+      wrapper = shallow(<SubHeader {...props} />);
     });
 
     test("does not render the homepage description", () => {

@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Header = ({ history }) => {
-  const pathname = history.location.pathname;
+const Header = (props) => {
+  const pathname = props.history.location.pathname;
   const isHome = pathname === "/";
 
   const renderPageTitle = () => {

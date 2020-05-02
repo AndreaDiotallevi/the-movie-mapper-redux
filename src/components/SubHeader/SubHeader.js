@@ -3,15 +3,17 @@ import history from "../../history";
 import genreList from "../../utils/genreList";
 
 const SubHeader = (props) => {
+  const pathname = props.history.location.pathname;
+
   const handleGenreChoice = (genre) => {
     history.push({
-      pathname: `${props.location.pathname}`,
+      pathname: `${pathname}`,
       search: `?genre=${genre}`,
     });
   };
 
   const renderGenreButtons = () => {
-    if (props.location.pathname !== "/") {
+    if (pathname !== "/") {
       return (
         <div className="genre-buttons" data-test="genre-buttons">
           {genreList.map((genre) => (
