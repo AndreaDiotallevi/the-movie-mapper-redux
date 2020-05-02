@@ -1,42 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import leftArrow from "../../assets/left-arrow.png";
 
 const Header = (props) => {
   const { pathname } = props.location;
+  const isHome = pathname === "/";
 
   const renderPageTitle = () => {
-    if (pathname === "/") {
-      return "THE MOVIE MAPPER";
-    } else {
+    if (!isHome) {
       const country = pathname.split("%20").join(" ").toUpperCase().slice(1);
       return `WELCOME TO ${country}`;
     }
+    return "THE MOVIE MAPPER";
   };
 
   const renderBackArrow = () => {
-    if (pathname !== "/") {
+    if (!isHome)
       return (
         <Link to="/">
-          <p>
-            <img
-              className="back-home-link"
-              src={leftArrow}
-              alt="back-home-link"
-            ></img>
-          </p>
+          <i class="arrow-left"></i>
         </Link>
       );
-    }
   };
 
   return (
     <div className="header-component">
       <div className="header-container">
         {renderBackArrow()}
-        <h1 className="header-title" data-test="movie-country-message">
-          {renderPageTitle()}
-        </h1>
+        <h1 className="header-title">{renderPageTitle()}</h1>
       </div>
     </div>
   );
