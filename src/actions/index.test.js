@@ -6,6 +6,7 @@ import {
   fetchCountryCode,
   fetchCountry,
   fetchMovieTitles,
+  fetchMovieData,
 } from "./";
 
 beforeEach(() => {
@@ -80,5 +81,27 @@ describe("fetchMovieTitles action creator", () => {
     store.dispatch(fetchMovieTitles("Italy"));
     const newState = store.getState();
     expect(newState.movieTitles.length).not.toEqual(0);
+  });
+});
+
+describe("fetchMovieData action creator", () => {
+  test("adds the movie data to state", async () => {
+    const store = storeFactory();
+
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 200,
+        response: {
+          Title: "Life Is Beautiful",
+          Released: "12 Feb 1999",
+        },
+      });
+    });
+
+    await store.dispatch(fetchMovieData("Life Is Beautiful"));
+    const newStore = store.getState();
+    expect(newStore.movies[0].Title).toEqual("Life Is Beautiful");
+    expect(newStore.movies[0].Released).toEqual("12 Feb 1999");
   });
 });
