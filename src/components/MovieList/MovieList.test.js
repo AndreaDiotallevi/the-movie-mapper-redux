@@ -32,5 +32,10 @@ describe("MovieList", () => {
     test("renders without errors", () => {
       expect(wrapper.length).toEqual(1);
     });
+
+    test("has movies prop", () => {
+      const moviesProp = wrapper.instance().props.movies;
+      expect(moviesProp).toEqual(state.movies);
+    });
   });
 });
