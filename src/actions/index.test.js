@@ -11,15 +11,22 @@ afterEach(() => {
   moxios.uninstall();
 });
 
-// describe("fetchCoordinates", () => {
-//   test('adds coordinates to state from user click on map', () => {
-
-//   })
-// });
+describe("fetchCoordinates", () => {
+  test("sets coordinates to state from user click on map", () => {
+    const store = storeFactory();
+    const latMock = jest.fn().mockImplementation(() => 44);
+    const lngMock = jest.fn().mockImplementation(() => 10);
+    store.dispatch(
+      fetchCoordinates({}, {}, { latLng: { lat: latMock, lng: lngMock } })
+    );
+    const newState = store.getState();
+    expect(newState.coordinates).toEqual([44, 10]);
+  });
+});
 
 describe("fetchCountryCode action creator", () => {
   test("sets country code to state if clicked on a country", async () => {
-    const coordinates = [44.59117130368516, 10.65088757396451]; // Italy
+    const coordinates = [44, 10]; // Italy
     const store = storeFactory();
 
     moxios.wait(() => {
@@ -36,7 +43,7 @@ describe("fetchCountryCode action creator", () => {
   });
 
   test("sets infoWindowOn to true if clicked on the sea", async () => {
-    const coordinates = [44.59117130368516, -21.301775147928982]; // Sea
+    const coordinates = [44, -21]; // Sea
     const store = storeFactory();
 
     moxios.wait(() => {
